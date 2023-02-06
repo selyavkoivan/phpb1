@@ -1,5 +1,4 @@
 <?php
-
 use services\FileService;
 
 require_once __DIR__ . "/../models/services/FileService.php";
@@ -13,21 +12,15 @@ class FileController
         $this->fileService = new FileService();
     }
 
-    public function executeRequest(): void
-    {
-        if ($_FILES) {
-            if($this->fileService->isUser($_FILES['file']['tmp_name'][0]) &&
-                $this->fileService->isDepartment($_FILES['file']['tmp_name'][1])) {
-                $this->fileService->uploadEntitiesFromFileToDatabase($_FILES['file']['tmp_name'][1], $_FILES['file']['name'][1]);
-                $this->fileService->uploadEntitiesFromFileToDatabase($_FILES['file']['tmp_name'][0], $_FILES['file']['name'][0]);
-            } else if($this->fileService->isUser($_FILES['file']['tmp_name'][1]) &&
-                $this->fileService->isDepartment($_FILES['file']['tmp_name'][0])) {
-                $this->fileService->uploadEntitiesFromFileToDatabase($_FILES['file']['tmp_name'][0], $_FILES['file']['name'][0]);
-                $this->fileService->uploadEntitiesFromFileToDatabase($_FILES['file']['tmp_name'][1], $_FILES['file']['name'][1]);
-            }
-        }
-        $files = $this->fileService->getAllFiles();
-        include_once __DIR__ . "/../views/home.php";
+    public function getFile(): object {
+        return $this->fileService->getFile($_GET["id"]);
+    }
 
+    public function getDepartments(): array {
+        return $this->fileService->getDepartmentsByFile($_GET["id"]);
+    }
+
+    public function getUsers(): array {
+        return $this->fileService->getUsersByFile($_GET["id"]);
     }
 }

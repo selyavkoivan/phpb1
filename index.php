@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/controllers/FileController.php";
+require_once __DIR__ . "/controllers/IndexController.php";
 
-$controller = new FileController();
+$controller = new IndexController();
 $controller->executeRequest();

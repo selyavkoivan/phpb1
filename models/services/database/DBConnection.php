@@ -2,7 +2,9 @@
 
 namespace models\database;
 
-use \PDO;
+require_once __DIR__ . "/../../config.php";
+
+use PDO;
 
 class DBConnection
 {
@@ -14,22 +16,13 @@ class DBConnection
 
     private function __construct()
     {
-        $config = [
-            'connection' => [
-                'host' => 'localhost',
-                'port' => '3306',
-                'username' => 'root',
-                'password' => '40igavumlih',
-                'database' => 'b1app'
-            ]
-        ];
+        $config = $GLOBALS["config"];
         $host = $config['connection']['host'] . ":" . $config['connection']['port'];
         $dbname = $config['connection']['database'];
         $username = $config['connection']['username'];
         $password = $config['connection']['password'];
 
-        echo '<script>alert("' . "mysql:host=$host;dbname=$dbname;charset-utf8;" . '")</script>';
-            $this->pdo = new PDO("mysql:host=$host;dbname=$dbname;charset-utf8;", $username, $password);
+        $this->pdo = new PDO("mysql:host=$host;dbname=$dbname;charset-utf8;", $username, $password);
 
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
@@ -37,9 +30,7 @@ class DBConnection
     public static function getInstance(): DBConnection
     {
         if (!self::$instance) {
-
             self::$instance = new self();
-
         }
         return self::$instance;
     }

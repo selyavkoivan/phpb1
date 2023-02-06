@@ -48,14 +48,14 @@ include_once "shared/layout_header.php"; ?>
                 <div class="card-body">
                     <div class="container">
                         <div class="row">
-                            <?php foreach ($files as $file)
-                            {?>
+                            <?php foreach ($files as $file) {
+                                ?>
                                 <div class="col-lg-3 mb-4">
                                     <div class="form-control">
                                         <p><?php echo $file->isUser() ? 'users' : 'departments' ?></p>
-                                        <h3><?php echo $file->getFileName()?></h3>
-                                         <a type="button" class="btn btn-outline-primary"
-                                           href="Home/BalanceFile/@balanceFile.BalanceFileId">
+                                        <h3><?php echo $file->getFileName() ?></h3>
+                                        <a type="button" class="btn btn-outline-primary"
+                                           href="/b1task/controllers/file.php?id=<?php echo $file->getFileId()?>">
                                             Открыть
                                         </a>
                                     </div>

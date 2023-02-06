@@ -2,10 +2,8 @@
 
 namespace entities;
 
-#[AllowDynamicProperties]
 class User
 {
-
     private string $xmlId;
     private string $lastName;
     private string $name;
@@ -17,6 +15,21 @@ class User
     private ?string $phone;
     private string $login;
     private string $password;
+
+    public function setData( $csvLine): void
+    {
+        $this->xmlId = $csvLine[0];
+        $this->lastName = $csvLine[1];
+        $this->name = $csvLine[2];
+        $this->secondName = $csvLine[3];
+        $this->department = $csvLine[4];
+        $this->workPosition = $csvLine[5];
+        $this->email = $csvLine[6];
+        $this->mobilePhone = $csvLine[7];
+        $this->phone = $csvLine[8];
+        $this->login = $csvLine[9];
+        $this->password = $csvLine[10];
+    }
 
     /**
      * @return string
