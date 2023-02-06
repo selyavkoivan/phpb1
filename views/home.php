@@ -26,7 +26,7 @@ include_once "shared/layout_header.php"; ?>
                                 <label for="file" id="drop-area" class="col-12 p-5 border border-5 rounded">
                                     <i class="fa fa-cloud-upload"></i> Выберите или перетащите файл ...
                                 </label>
-                                <input type="file" id="file" name="file" class="d-none" accept="text/csv">
+                                <input type="file" id="file" name="file[]" class="d-none" accept="text/csv" multiple>
                                 <button id="file-upload" class="d-none">
                             </div>
                         </div>
@@ -48,19 +48,20 @@ include_once "shared/layout_header.php"; ?>
                 <div class="card-body">
                     <div class="container">
                         <div class="row">
-                            <?php /*@foreach (var balanceFile in Model)
-                            {
-                            <div class="col-lg-3 mb-4">
-                                <div class="form-control">
-                                    <h3>@balanceFile.FileName</h3>
-
-                                    <a type="button" class="btn btn-outline-primary"
-                                       href="Home/BalanceFile/@balanceFile.BalanceFileId">
-                                        Открыть
-                                    </a>
+                            <?php foreach ($files as $file)
+                            {?>
+                                <div class="col-lg-3 mb-4">
+                                    <div class="form-control">
+                                        <p><?php echo $file->isUser() ? 'users' : 'departments' ?></p>
+                                        <h3><?php echo $file->getFileName()?></h3>
+                                         <a type="button" class="btn btn-outline-primary"
+                                           href="Home/BalanceFile/@balanceFile.BalanceFileId">
+                                            Открыть
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            }*/ ?>
+                                <?php
+                            } ?>
                         </div>
                     </div>
                 </div>

@@ -16,9 +16,17 @@ class FileController
     public function executeRequest(): void
     {
         if ($_FILES) {
-            $this->fileService->uploadEntitiesFromFileToDatabase($_FILES['file']['tmp_name']);
-
+            if($this->fileService->isUser($_FILES['file']['tmp_name'][0]) &&
+                $this->fileService->isDepartment($_FILES['file']['tmp_name'][1])) {
+                $this->fileService->uploadEntitiesFromFileToDatabase($_FILES['file']['tmp_name'][1], $_FILES['file']['name'][1]);
+                $this->fileService->uploadEntitiesFromFileToDatabase($_FILES['file']['tmp_name'][0], $_FILES['file']['name'][0]);
+            } else if($this->fileService->isUser($_FILES['file']['tmp_name'][1]) &&
+                $this->fileService->isDepartment($_FILES['file']['tmp_name'][0])) {
+                $this->fileService->uploadEntitiesFromFileToDatabase($_FILES['file']['tmp_name'][0], $_FILES['file']['name'][0]);
+                $this->fileService->uploadEntitiesFromFileToDatabase($_FILES['file']['tmp_name'][1], $_FILES['file']['name'][1]);
+            }
         }
+        $files = $this->fileService->getAllFiles();
         include_once __DIR__ . "/../views/home.php";
 
     }

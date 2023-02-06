@@ -1,6 +1,6 @@
 <?php
 
-namespace services\parser;
+namespace models\services\parser;
 
 use entities\Department;
 use entities\User;
@@ -14,28 +14,35 @@ class FileParser
     const USER_COUNT = 11;
     const DEPARTMENT_COUNT = 3;
 
-    public function parseFile($csvFile): array {
-        return $this->getCountOfColumns($csvFile) == self::USER_COUNT ?
-            $this->getUsers($csvFile) : $this->getDepartments($csvFile);
+    public function isUser($csvFile): bool {
+        return $this->getCountOfColumns($csvFile) == self::USER_COUNT;
     }
 
-    private function getCountOfColumns($csvFile): int {
+    public function isDepartment(array $csvFile)
+    {
+        return $this->getCountOfColumns($csvFile) == self::DEPARTMENT_COUNT;
+    }
+
+    public function getCountOfColumns($csvFile): int {
         return count(str_getcsv($csvFile[0], self::SEPARATOR));
     }
 
-    private function getUsers($csvFile): array {
+    public function getUsers($csvFile): array {
         $users = [];
         for($i = 1; $i < count($csvFile); $i++) {
-            $user = new User(str_getcsv($csvFile[$i], self::SEPARATOR));
+            $csvLine = str_getcsv($csvFile[$i], self::SEPARATOR);
+            $user = new User();
             $users[] = $user;
         }
         return $users;
     }
 
-    private function getDepartments($csvFile): array {
+    public function getDepartments($csvFile): array {
         $departments = [];
         for($i = 1; $i < count($csvFile); $i++) {
-            $department = new Department(str_getcsv($csvFile[$i], self::SEPARATOR));
+            $csvLine = str_getcsv($csvFile[$i], self::SEPARATOR);
+            $department = new Department();
+
             $departments[] = $department;
         }
         return $departments;

@@ -8,12 +8,13 @@ class Department
     private ?string $parentXmlId;
     private string $nameDepartment;
 
-    public function __construct($csvLine)
+    public function __construct1($csvLine)
     {
         $this->xmlId = $csvLine[0];
         $this->parentXmlId = $csvLine[1];
         $this->nameDepartment = $csvLine[2];
     }
+
 
 
     public function getXmlId(): string
