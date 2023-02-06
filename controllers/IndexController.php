@@ -15,11 +15,15 @@ class IndexController
 
     public function executeRequest(): void
     {
+        // если есть загруженные файлы
         if ($_FILES) {
+            // если их два
             if(count($_FILES['file']['tmp_name']) == 2) {
                 try {
+                    // если их структура соответствует необходимой нам
                     if ($this->fileService->isUser($_FILES['file']['tmp_name'][0]) &&
                         $this->fileService->isDepartment($_FILES['file']['tmp_name'][1])) {
+                        // загружаем в бд
                         $this->fileService->uploadEntitiesFromFileToDatabase($_FILES['file']['tmp_name'][1], $_FILES['file']['name'][1]);
                         $this->fileService->uploadEntitiesFromFileToDatabase($_FILES['file']['tmp_name'][0], $_FILES['file']['name'][0]);
                     } else if ($this->fileService->isUser($_FILES['file']['tmp_name'][1]) &&

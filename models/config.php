@@ -1,5 +1,7 @@
 <?php
 
+// глобальные переменные
+
 $config = [
     'connection' => [
         'host' => 'localhost',

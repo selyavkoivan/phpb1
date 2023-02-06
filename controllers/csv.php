@@ -4,10 +4,14 @@ require_once __DIR__ . "/FileController.php";
 require_once __DIR__ . "/../models/config.php";
 
 $fileController = new FileController();
+
+// получаем файл по айди
 $file = $fileController->getFile();
 
 if ($file->isUser()) {
+    // получаем всех пользователей в этом файле
     $users = $fileController->getUsers();
+    // загружаем их в файл и возвращаем клиенту
     arrayToCsvDownload($users, $GLOBALS['user'], $file->getFileName());
 } else {
     $departments = $fileController->getDepartments();

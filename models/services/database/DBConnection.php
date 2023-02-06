@@ -27,6 +27,7 @@ class DBConnection
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    // реализован паттерн одиночка
     public static function getInstance(): DBConnection
     {
         if (!self::$instance) {

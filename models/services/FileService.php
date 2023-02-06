@@ -52,6 +52,7 @@ class FileService
             try {
                 $this->userDao->saveUsers($this->fileParser->getUsers($csvFile), $fileId);
             } catch (Exception $e) {
+                // удаляем последние два добавленных файла, вместе с ними каскадно удалятся все записи
                 $this->fileDao->deleteFile($fileId);
                 $this->fileDao->deleteFile($fileId - 1);
                 throw $e;
@@ -60,6 +61,7 @@ class FileService
             try {
                 $this->departmentDao->saveDepartments($this->fileParser->getDepartments($csvFile), $fileId);
             } catch (Exception $e) {
+                // удаляем последний файл, вместе с ними каскадно удалятся все записи
                 $this->fileDao->deleteFile($fileId);
                 throw $e;
             }
@@ -68,6 +70,7 @@ class FileService
 
     public function getAllFiles(): array
     {
+        // объединяем два массива
         return array_merge($this->fileDao->selectUserFiles(), $this->fileDao->selectDepartmentFiles());
     }
 
@@ -83,6 +86,6 @@ class FileService
 
     public function getUsersByFile($fileId): array
     {
-        return $this->userDao->selectusersByFile($fileId);
+        return $this->userDao->selectUsersByFile($fileId);
     }
 }
